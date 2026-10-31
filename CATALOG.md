@@ -2,6 +2,12 @@
 
 The index for the Tigger repo (grogusmom1989-creator/Tigger), Kiki's expansion garage for her AI Studio app stuff. Started 2026-10-31.
 
+## Scope (Kiki's word, 2026-10-31)
+
+"Everything we been working on can go in there." — Tigger is the GitHub home for our joint work: code packs, catalogs, indexes, and text builds land here as we make them.
+
+The standing walls still hold inside that "everything": Tigger is a **public** repo, so public-safe work only — private-side material keeps its private homes, and real keys/codes never land here (Bitwarden only). Pictures join via the routes that can carry them (web upload, the Studio shove).
+
 ## In this repo
 
 | Path | What it is | Landed |
