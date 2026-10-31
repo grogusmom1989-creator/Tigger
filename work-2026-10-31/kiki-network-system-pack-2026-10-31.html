@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- KIKI NETWORK SYSTEM PACK v1 — built by Liam (Muse) for Kiki, 2026-10-31.
+     One self-contained module: the whole-app Entertainment Network System face.
+     Works two ways: (1) as a page/section in the Neocities app (Kiki's World),
+     (2) dropped into the Google AI Studio project (Kiki World 2.0) as the Network screen.
+     Doorway tag: add ?via=2.0 to the URL when it runs inside the Google app,
+     or ?via=world inside Kiki's World. No external files, no tracking, no sound. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Kiki and Kings Network — System</title>
+<style>
+  :root{
+    --ink:#2b2140; --paper:#fdf7ff; --lav:#b79ced; --pink:#ffb6d9; --gold:#f6c453;
+    --teal:#7fd8c9; --sky:#8fc7ff; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Verdana,Geneva,sans-serif;background:linear-gradient(180deg,#efe6ff,#fdf7ff);color:var(--ink)}
+  header{padding:18px 16px 8px;text-align:center}
+  h1{margin:0;font-size:1.5rem;letter-spacing:.5px}
+  .crown{font-size:1.3rem}
+  #doorway-tag{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:999px;
+    background:var(--lav);color:#fff;font-size:.8rem}
+  /* Now Playing / Up Next strip — calm rotation, no sound, no autoplay media */
+  #now-strip{margin:12px auto;max-width:720px;background:var(--card);border:2px solid var(--lav);
+    border-radius:14px;padding:10px 14px;text-align:center;box-shadow:0 2px 8px rgba(80,50,140,.12)}
+  #now-strip .label{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:#7a63a8}
+  #now-strip .title{font-size:1.05rem;font-weight:bold;margin-top:2px}
+  /* TV Guide */
+  main{max-width:720px;margin:0 auto;padding:6px 12px 28px}
+  h2{font-size:1.05rem;margin:18px 4px 8px;color:#5a4390}
+  .channel{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:12px;
+    padding:10px 12px;margin:8px 0;text-decoration:none;color:var(--ink);
+    border-left:8px solid var(--lav);box-shadow:0 1px 5px rgba(80,50,140,.10)}
+  .channel:active{transform:scale(.99)}
+  .num{font-weight:bold;font-size:1.1rem;min-width:2.2rem;text-align:center;color:#5a4390}
+  .name{font-weight:bold}
+  .desc{font-size:.82rem;color:#5c5170}
+  .anchor{border-left-color:var(--gold)}
+  .c2{border-left-color:var(--pink)} .c3{border-left-color:var(--teal)} .c4{border-left-color:var(--sky)}
+  footer{text-align:center;font-size:.75rem;color:#7a63a8;padding:0 12px 22px}
+</style>
+</head>
+<body>
+<header>
+  <div class="crown">👑</div>
+  <h1>The Kiki and Kings Network</h1>
+  <div id="doorway-tag">via Kiki's World</div>
+</header>
+
+<div id="now-strip" aria-live="polite">
+  <div class="label" id="now-label">Now Playing</div>
+  <div class="title" id="now-title">Kiki TV — Welcome to the Network</div>
+</div>
+
+<main>
+  <h2>📺 Crown Channels</h2>
+  <div id="anchor-channels"></div>
+  <h2>🌈 Network Channels</h2>
+  <div id="network-channels"></div>
+</main>
+
+<footer>One network, two doorways • The Kiki and Kings Network • onedirectionhealinghq</footer>
+
+<script>
+// Channel lineup — anchor channels first (Kiki's rule, 2026-10-31), then the network channels.
+// Links point at her one home; sections keep their own homes inside it.
+var HOME = "https://queen1989.neocities.org/";
+var ANCHORS = [
+  {n:1, name:"Kiki TV",       desc:"The crown channel — Kiki's own shows and specials", cls:"anchor"},
+  {n:2, name:"Band TV",       desc:"Band TV — the boys, the bands, the music",          cls:"anchor"},
+  {n:3, name:"Giggle TV",     desc:"Giggle TV — comedy, silliness and the Giggle Factory", cls:"anchor"},
+  {n:4, name:"Lifestyle",     desc:"Lifestyle — cozy living, looks and everyday sparkle", cls:"anchor"},
+  {n:5, name:"Kids & Family", desc:"Kids & Family — Tigger, Grogu, the Plush Crew and family time", cls:"anchor"}
+];
+var CHANNELS = [
+  {n:6,  name:"KikiOS",          desc:"The system channel — the Everything Shell and every edition", cls:"c2"},
+  {n:7,  name:"Business Suite",  desc:"All 12 companies under one roof",                            cls:"c3"},
+  {n:8,  name:"Kiki Cloud",      desc:"Her cloud corner — every home her work lives in",             cls:"c4"},
+  {n:9,  name:"Ad Studio",       desc:"Her own ads app — campaigns, meters and the studio desk",     cls:"c2"},
+  {n:10, name:"Savings Bank",    desc:"The vaults — saving up, jar by jar",                          cls:"c3"},
+  {n:11, name:"Avatar Matrix",   desc:"Every avatar, every type — group, solo, celestial, normal",   cls:"c4"}
+];
+function row(c){
+  var a=document.createElement("a");
+  a.className="channel "+(c.cls||""); a.href=HOME;
+  a.innerHTML='<span class="num">'+c.n+'</span><span><span class="name">'+c.name+
+    '</span><br><span class="desc">'+c.desc+'</span></span>';
+  return a;
+}
+ANCHORS.forEach(function(c){document.getElementById("anchor-channels").appendChild(row(c));});
+CHANNELS.forEach(function(c){document.getElementById("network-channels").appendChild(row(c));});
+
+// Doorway tag — the network face shows which doorway she is watching through.
+(function(){
+  var via = new URLSearchParams(location.search).get("via");
+  var tag = document.getElementById("doorway-tag");
+  if(via === "2.0"){ tag.textContent = "via 2.0 (Google app)"; }
+  else if(via === "world"){ tag.textContent = "via Kiki's World"; }
+})();
+
+// Now Playing / Up Next — gentle text rotation (calm rails: no sound, no flashing).
+var STRIP = [
+  ["Now Playing","Kiki TV — Welcome to the Network"],
+  ["Up Next","Band TV — Northern Heart sessions"],
+  ["Now Playing","Giggle TV — Giggle Factory favorites"],
+  ["Up Next","Kids & Family — Plush Crew story time"]
+];
+var si = 0;
+setInterval(function(){
+  si = (si+1) % STRIP.length;
+  document.getElementById("now-label").textContent = STRIP[si][0];
+  document.getElementById("now-title").textContent = STRIP[si][1];
+}, 6000);
+</script>
+</body>
+</html>

@@ -1,11 +1,21 @@
-<div align="center">
+# Tigger 🐯
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+**Exspansion** — the expansion garage for Kiki's app stuff.
 
-  <h1>Built with AI Studio</h2>
+This repo is where Kiki's creations from Google AI Studio (and every other bench) come to live on GitHub: app projects, code packs, and expansions for **KikiVerse — Queen K's Sparkle Universe**.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## What's here
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+- `CATALOG.md` — the index of everything in this repo, and where everything else lives
+- `work-2026-10-31/` — the first fill: the Kiki Network system pack (2026-10-31)
 
-</div>
+## The plan
+
+Kiki builds in AI Studio, then the big shove lands here — this repo grows in batches as her Studio work arrives. Everything here is an extension of her world; her one home stays [queen1989.neocities.org](https://queen1989.neocities.org/).
+
+## House rule
+
+App stuff lives here. Real keys, codes, and passwords never do — those stay in Bitwarden, always.
+
+---
+*Starter README written by Liam (Muse) on 2026-10-31 at Kiki's word — Kiki's own words take the crown whenever she writes hers.*
