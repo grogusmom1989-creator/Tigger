@@ -225,6 +225,19 @@ fun DriveScreen(
                 }
             }
 
+            // Universal Flow Music & All Google Apps Importer ("Import Everything From Everywhere")
+            item {
+                com.example.ui.components.FlowMusicGoogleImporterSection(
+                    onTrackImportedToJukebox = { _ -> },
+                    onBlendImportedTrackInLab = { _ ->
+                        onNavigateToLab()
+                    },
+                    onImportAllEverywhere = { _ ->
+                        viewModel.pullEverything()
+                    }
+                )
+            }
+
             // AI Studio ZIP Backup Hero Card
             item {
                 Card(

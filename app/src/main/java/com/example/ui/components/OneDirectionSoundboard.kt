@@ -43,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -137,6 +138,7 @@ fun OneDirectionSoundboard(
     onQuotePlayed: (BandQuoteItem) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     var activeQuote by remember { mutableStateOf(iconicBandQuotes[0]) }
     var isPlayingQuote by remember { mutableStateOf(false) }
 
@@ -193,12 +195,23 @@ fun OneDirectionSoundboard(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Active Playing Quote Banner
+            // Active Playing Quote Banner (Tap to replay audio)
             Surface(
                 shape = RoundedCornerShape(16.dp),
                 color = KikiDarkBg,
                 border = androidx.compose.foundation.BorderStroke(1.dp, parseHexColor(activeQuote.colorHex)),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        isPlayingQuote = true
+                        com.example.util.HapticsUtil.performJukeboxBeat(context)
+                        com.example.util.MusicAudioEngine.playCatchphrase(
+                            context = context,
+                            speakerName = activeQuote.member,
+                            phrase = activeQuote.quote
+                        )
+                        onQuotePlayed(activeQuote)
+                    }
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -276,6 +289,12 @@ fun OneDirectionSoundboard(
                             .clickable {
                                 activeQuote = quoteItem
                                 isPlayingQuote = true
+                                com.example.util.HapticsUtil.performJukeboxBeat(context)
+                                com.example.util.MusicAudioEngine.playCatchphrase(
+                                    context = context,
+                                    speakerName = quoteItem.member,
+                                    phrase = quoteItem.quote
+                                )
                                 onQuotePlayed(quoteItem)
                             }
                             .testTag("quote_button_${quoteItem.id}")

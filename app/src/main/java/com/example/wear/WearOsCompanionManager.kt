@@ -68,7 +68,7 @@ object WearOsCompanionManager {
     private val _currentTrackIndex = MutableStateFlow(0)
     val currentTrackIndex: StateFlow<Int> = _currentTrackIndex.asStateFlow()
 
-    private val _isPlaying = MutableStateFlow(true)
+    private val _isPlaying = MutableStateFlow(false)
     val isPlaying: StateFlow<Boolean> = _isPlaying.asStateFlow()
 
     private val _wristVolume = MutableStateFlow(0.8f)
@@ -123,5 +123,18 @@ object WearOsCompanionManager {
         _wristSparks.value = phoneSparks
         _watchInfo.update { it.copy(lastSyncTimestamp = "Just now") }
         _lastWristAction.value = "Synced $phoneSparks Sparks with Phone DataLayer"
+    }
+
+    fun addImportedTrack(track: WristJukeboxTrack) {
+        _tracks.update { current ->
+            if (current.any { it.id == track.id || it.title.equals(track.title, ignoreCase = true) }) {
+                current
+            } else {
+                listOf(track) + current
+            }
+        }
+        _currentTrackIndex.value = 0
+        _isPlaying.value = true
+        _lastWristAction.value = "Imported '${track.title}' from Flow Music / Google Apps! 🎵"
     }
 }

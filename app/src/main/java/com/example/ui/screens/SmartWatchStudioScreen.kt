@@ -555,6 +555,22 @@ fun SmartWatchStudioScreen(
                                     timeText = easternTimeText,
                                     onPlayQuote = { quote ->
                                         lastPlayedCatchphrase = quote
+                                        HapticsUtil.performJukeboxBeat(context)
+                                        if (quote.contains("light up my world", ignoreCase = true)) {
+                                            val activeWristTrack = wristTracks.getOrNull(currentTrackIndex) ?: wristTracks[0]
+                                            com.example.util.MusicAudioEngine.playTrack(
+                                                context = context,
+                                                trackId = activeWristTrack.id,
+                                                title = activeWristTrack.title,
+                                                sourceLabel = "Smartwatch Concert Jukebox • ${activeWristTrack.album}"
+                                            )
+                                        } else {
+                                            com.example.util.MusicAudioEngine.playCatchphrase(
+                                                context = context,
+                                                speakerName = selectedTheme.title,
+                                                phrase = quote
+                                            )
+                                        }
                                         Toast.makeText(context, "Wrist Audio: \"$quote\"", Toast.LENGTH_SHORT).show()
                                     }
                                 )
@@ -580,14 +596,38 @@ fun SmartWatchStudioScreen(
                                     onTogglePlay = {
                                         WearOsCompanionManager.togglePlayPause()
                                         HapticsUtil.performJukeboxBeat(context)
+                                        if (WearOsCompanionManager.isPlaying.value) {
+                                            com.example.util.MusicAudioEngine.playTrack(
+                                                context = context,
+                                                trackId = currentTrack.id,
+                                                title = currentTrack.title,
+                                                sourceLabel = "Wrist Jukebox • ${currentTrack.album}"
+                                            )
+                                        } else {
+                                            com.example.util.MusicAudioEngine.pause()
+                                        }
                                     },
                                     onNextTrack = {
                                         WearOsCompanionManager.nextTrack()
                                         HapticsUtil.performSparkleClick(context)
+                                        val nextTrack = wristTracks.getOrNull(WearOsCompanionManager.currentTrackIndex.value) ?: currentTrack
+                                        com.example.util.MusicAudioEngine.playTrack(
+                                            context = context,
+                                            trackId = nextTrack.id,
+                                            title = nextTrack.title,
+                                            sourceLabel = "Wrist Jukebox • ${nextTrack.album}"
+                                        )
                                     },
                                     onPreviousTrack = {
                                         WearOsCompanionManager.previousTrack()
                                         HapticsUtil.performSparkleClick(context)
+                                        val prevTrack = wristTracks.getOrNull(WearOsCompanionManager.currentTrackIndex.value) ?: currentTrack
+                                        com.example.util.MusicAudioEngine.playTrack(
+                                            context = context,
+                                            trackId = prevTrack.id,
+                                            title = prevTrack.title,
+                                            sourceLabel = "Wrist Jukebox • ${prevTrack.album}"
+                                        )
                                     },
                                     onToggleStadiumAmbience = {
                                         WearOsCompanionManager.toggleStadiumAmbience()

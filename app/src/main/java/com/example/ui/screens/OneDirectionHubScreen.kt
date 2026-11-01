@@ -235,7 +235,8 @@ data class OneDirectionTrack(
     val secondaryHex: String,
     val finish: FinishType,
     val squalane: Int,
-    val scent: String
+    val scent: String,
+    val localUriString: String? = null
 )
 
 val oneDirectionTracks = listOf(
@@ -491,10 +492,11 @@ fun OneDirectionHubScreen(
         }
     }
 
-    // Jukebox State
+    // Jukebox State (Dynamic: includes default 1D hits + imported Flow Music & Google Apps tracks)
+    var jukeboxTracks by remember { mutableStateOf(oneDirectionTracks) }
     var currentTrackIndex by remember { mutableIntStateOf(0) }
-    var isPlaying by remember { mutableStateOf(true) }
-    val currentTrack = oneDirectionTracks[currentTrackIndex]
+    val isPlaying by com.example.util.MusicAudioEngine.isPlaying.collectAsState()
+    val currentTrack = jukeboxTracks.getOrElse(currentTrackIndex) { jukeboxTracks.first() }
 
     // Trivia State
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
@@ -1238,6 +1240,58 @@ fun OneDirectionHubScreen(
             }
         }
 
+        // 1B. Universal Flow Music & Google Apps Importer ("Import Everything From Everywhere")
+        item {
+            com.example.ui.components.FlowMusicGoogleImporterSection(
+                onTrackImportedToJukebox = { imported ->
+                    val newTrack = OneDirectionTrack(
+                        id = imported.id,
+                        title = imported.title,
+                        album = imported.sourceGoogleApp,
+                        year = "2026",
+                        iconicLyric = imported.lyricOrNote,
+                        formulaTitle = imported.formulaTitle,
+                        primaryHex = imported.colorHex,
+                        secondaryHex = imported.secondaryHex,
+                        finish = FinishType.HOLOGRAPHIC,
+                        squalane = 35,
+                        scent = "Flow Music & Starlight Squalane",
+                        localUriString = imported.localUriString
+                    )
+                    jukeboxTracks = listOf(newTrack) + jukeboxTracks.filterNot { it.id == newTrack.id }
+                    currentTrackIndex = 0
+                    com.example.util.MusicAudioEngine.playTrack(
+                        context = context,
+                        trackId = newTrack.id,
+                        title = newTrack.title,
+                        sourceLabel = newTrack.album,
+                        localUriString = newTrack.localUriString
+                    )
+                },
+                onBlendImportedTrackInLab = { imported ->
+                    viewModel.loadOneDirectionFormula(
+                        name = imported.formulaTitle,
+                        primaryHex = imported.colorHex,
+                        secondaryHex = imported.secondaryHex,
+                        finish = FinishType.HOLOGRAPHIC,
+                        squalane = 35,
+                        scent = "Flow Music & Botanical Squalane",
+                        notes = "Imported from ${imported.sourceGoogleApp}: \"${imported.lyricOrNote}\""
+                    )
+                },
+                onApplyImportedWallpaperUri = { uriStr ->
+                    viewModel.setCustomWallpaperUri(uriStr)
+                },
+                onImportAllEverywhere = { allItems ->
+                    viewModel.installMetaMuseDriveBackup()
+                    viewModel.awardSparks(250, "Omniverse Mega-Import (${allItems.size} Flow Music & Google App Bundles)")
+                },
+                onOpenDriveHub = {
+                    viewModel.selectTab(com.example.viewmodel.KikiNavTab.DRIVE)
+                }
+            )
+        }
+
         // 2. Interactive 1D Hit Jukebox & Lyric Blender
         item {
             Card(
@@ -1272,7 +1326,7 @@ fun OneDirectionHubScreen(
                                     color = KikiPearl
                                 )
                                 Text(
-                                    text = "Track ${currentTrackIndex + 1} of ${oneDirectionTracks.size} • ${currentTrack.album} (${currentTrack.year})",
+                                    text = "Track ${currentTrackIndex + 1} of ${jukeboxTracks.size} • ${currentTrack.album} (${currentTrack.year})",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = KikiCyan
                                 )
@@ -1326,7 +1380,17 @@ fun OneDirectionHubScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                currentTrackIndex = if (currentTrackIndex > 0) currentTrackIndex - 1 else oneDirectionTracks.size - 1
+                                val nextIdx = if (currentTrackIndex > 0) currentTrackIndex - 1 else jukeboxTracks.size - 1
+                                currentTrackIndex = nextIdx
+                                val target = jukeboxTracks.getOrElse(nextIdx) { jukeboxTracks.first() }
+                                HapticsUtil.performSparkleClick(context)
+                                com.example.util.MusicAudioEngine.playTrack(
+                                    context = context,
+                                    trackId = target.id,
+                                    title = target.title,
+                                    sourceLabel = target.album,
+                                    localUriString = target.localUriString
+                                )
                             }
                         ) {
                             Icon(Icons.Default.SkipPrevious, contentDescription = "Previous Track", tint = KikiPearl)
@@ -1339,7 +1403,17 @@ fun OneDirectionHubScreen(
                                 .size(48.dp)
                                 .clip(CircleShape)
                                 .background(OneDirectionRed)
-                                .clickable { isPlaying = !isPlaying },
+                                .clickable {
+                                    HapticsUtil.performJukeboxBeat(context)
+                                    com.example.util.MusicAudioEngine.toggleTrack(
+                                        context = context,
+                                        trackId = currentTrack.id,
+                                        title = currentTrack.title,
+                                        sourceLabel = currentTrack.album,
+                                        localUriString = currentTrack.localUriString
+                                    )
+                                }
+                                .testTag("jukebox_play_pause_btn"),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -1354,10 +1428,68 @@ fun OneDirectionHubScreen(
 
                         IconButton(
                             onClick = {
-                                currentTrackIndex = (currentTrackIndex + 1) % oneDirectionTracks.size
+                                val nextIdx = (currentTrackIndex + 1) % jukeboxTracks.size
+                                currentTrackIndex = nextIdx
+                                val target = jukeboxTracks.getOrElse(nextIdx) { jukeboxTracks.first() }
+                                HapticsUtil.performSparkleClick(context)
+                                com.example.util.MusicAudioEngine.playTrack(
+                                    context = context,
+                                    trackId = target.id,
+                                    title = target.title,
+                                    sourceLabel = target.album,
+                                    localUriString = target.localUriString
+                                )
                             }
                         ) {
                             Icon(Icons.Default.SkipNext, contentDescription = "Next Track", tint = KikiPearl)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Quick-Select Track Carousel so any song or imported Flow Music stem can be tapped directly
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        itemsIndexed(jukeboxTracks) { idx, trackItem ->
+                            val isSelected = idx == currentTrackIndex
+                            Surface(
+                                shape = RoundedCornerShape(10.dp),
+                                color = if (isSelected) parseHexColor(trackItem.primaryHex).copy(alpha = 0.25f) else KikiSurfaceElevated,
+                                border = androidx.compose.foundation.BorderStroke(
+                                    1.dp,
+                                    if (isSelected) parseHexColor(trackItem.primaryHex) else KikiSurfaceBorder
+                                ),
+                                modifier = Modifier.clickable {
+                                    currentTrackIndex = idx
+                                    HapticsUtil.performJukeboxBeat(context)
+                                    com.example.util.MusicAudioEngine.playTrack(
+                                        context = context,
+                                        trackId = trackItem.id,
+                                        title = trackItem.title,
+                                        sourceLabel = trackItem.album,
+                                        localUriString = trackItem.localUriString
+                                    )
+                                }
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = if (isSelected && isPlaying) "🔊 " else "♫ ",
+                                        fontSize = 11.sp,
+                                        color = KikiGold
+                                    )
+                                    Text(
+                                        text = trackItem.title,
+                                        fontSize = 11.sp,
+                                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                        color = if (isSelected) Color.White else KikiPearl
+                                    )
+                                }
+                            }
                         }
                     }
 

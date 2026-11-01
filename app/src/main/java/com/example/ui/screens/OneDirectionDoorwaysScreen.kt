@@ -654,6 +654,7 @@ fun DoorwayRoomContent(
         )
     }
 
+    val context = androidx.compose.ui.platform.LocalContext.current
     var newNoteText by remember { mutableStateOf("") }
     var selectedSticker by remember { mutableStateOf(doorway.presetStickers.first()) }
     var heartsCollected by remember { mutableIntStateOf(28) }
@@ -820,6 +821,12 @@ fun DoorwayRoomContent(
                                 .clickable {
                                     activeSoundPhrase = catchphrase.phrase
                                     heartsCollected += 2
+                                    HapticsUtil.performJukeboxBeat(context)
+                                    com.example.util.MusicAudioEngine.playCatchphrase(
+                                        context = context,
+                                        speakerName = doorway.title,
+                                        phrase = catchphrase.phrase
+                                    )
                                 }
                         ) {
                             Row(

@@ -53,10 +53,27 @@ fun KikiVerseScreen(viewModel: KikiViewModel, onNavigateBack: () -> Unit) {
             
             item { Text("Music Tracks", style = MaterialTheme.typography.titleLarge, color = KikiPearl) }
             items(musicTracks) { track ->
-                Card(modifier = Modifier.fillMaxWidth()) {
+                val context = androidx.compose.ui.platform.LocalContext.current
+                val isPlaying by com.example.util.MusicAudioEngine.isPlaying.collectAsState()
+                val activeTrackId by com.example.util.MusicAudioEngine.activeTrackId.collectAsState()
+                val isThisPlaying = isPlaying && activeTrackId == track.id
+                Card(
+                    onClick = {
+                        com.example.util.MusicAudioEngine.toggleTrack(
+                            context = context,
+                            trackId = track.id,
+                            title = track.title,
+                            sourceLabel = track.artist
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     ListItem(
                         headlineContent = { Text(track.title) },
-                        supportingContent = { Text(track.artist) }
+                        supportingContent = { Text(track.artist) },
+                        trailingContent = {
+                            Text(if (isThisPlaying) "🔊 Playing" else "▶️ Play")
+                        }
                     )
                 }
             }
