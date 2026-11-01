@@ -1,0 +1,6 @@
+{
+  "name": "1D World",
+  "description": "One Direction fan club, concert jukebox, tribute lab, sparkle matching game, 3D sparkle world, and multi-store hub.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

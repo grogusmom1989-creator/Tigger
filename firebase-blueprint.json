@@ -1,0 +1,159 @@
+{
+  "entities": {
+    "LeaderboardItem": {
+      "title": "Leaderboard Item",
+      "description": "An entry in the leaderboard tracking user engagement metrics.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "sparksBalance": { "type": "number" }
+      },
+      "required": ["userId", "username", "sparksBalance"]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "bio": { "type": "string" },
+        "profileImageUrl": { "type": "string" }
+      },
+      "required": ["username"]
+    },
+    "UserActivity": {
+      "title": "User Activity",
+      "description": "Tracks user activities for points.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "activityType": { "type": "string" },
+        "pointsEarned": { "type": "number" },
+        "timestamp": { "type": "timestamp" }
+      },
+      "required": ["userId", "activityType", "pointsEarned", "timestamp"]
+    },
+    "Reward": {
+      "title": "Reward",
+      "description": "Available virtual items or upgrades.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "cost": { "type": "number" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["name", "cost"]
+    },
+    "UserReward": {
+      "title": "User Reward",
+      "description": "Rewards claimed by a user.",
+      "type": "object",
+      "properties": {
+        "rewardId": { "type": "string" },
+        "timestamp": { "type": "timestamp" }
+      },
+      "required": ["rewardId", "timestamp"]
+    },
+    "Friendship": {
+      "title": "Friendship",
+      "description": "Friendship between two users.",
+      "type": "object",
+      "properties": {
+        "users": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string" },
+        "requestSender": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      },
+      "required": ["users", "status", "createdAt"]
+    },
+    "Chat": {
+      "title": "Chat",
+      "description": "Chat session between two users.",
+      "type": "object",
+      "properties": {
+        "members": { "type": "array", "items": { "type": "string" } },
+        "lastMessageText": { "type": "string" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["members", "updatedAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Message in a chat.",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "timestamp" }
+      },
+      "required": ["senderId", "text", "timestamp"]
+    },
+    "JournalEntry": {
+      "title": "Journal Entry",
+      "description": "Personal beauty log.",
+      "type": "object",
+      "properties": {
+        "date": { "type": "timestamp" },
+        "content": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "mood": { "type": "string" }
+      },
+      "required": ["date", "content"]
+    },
+    "SpotlightEntry": {
+      "title": "Spotlight Entry",
+      "description": "Featured community creations.",
+      "type": "object",
+      "properties": {
+        "creationId": { "type": "string" },
+        "featuredAt": { "type": "timestamp" },
+        "curatorNote": { "type": "string" }
+      },
+      "required": ["creationId", "featuredAt"]
+    }
+  },
+  "firestore": {
+    "/leaderboard/{userId}": {
+      "schema": "LeaderboardItem",
+      "description": "Top creators leaderboard"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles"
+    },
+    "/users/{userId}/activities/{activityId}": {
+      "schema": "UserActivity",
+      "description": "User activity history"
+    },
+    "/rewards/{rewardId}": {
+      "schema": "Reward",
+      "description": "Global rewards catalog"
+    },
+    "/users/{userId}/rewards/{rewardId}": {
+      "schema": "UserReward",
+      "description": "Rewards claimed by the user"
+    },
+    "/friendships/{friendshipId}": {
+      "schema": "Friendship",
+      "description": "Friendships"
+    },
+    "/chats/{chatId}": {
+      "schema": "Chat",
+      "description": "Chats"
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages"
+    },
+    "/users/{userId}/journals/{journalId}": {
+      "schema": "JournalEntry",
+      "description": "Daily beauty logs"
+    },
+    "/spotlight/{spotlightId}": {
+      "schema": "SpotlightEntry",
+      "description": "Featured content"
+    }
+  }
+}

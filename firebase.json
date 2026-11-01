@@ -1,0 +1,10 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "databases": {
+      "ai-studio-android-kikiworl-492dbb46-f1da-49d6-b94d-b7f5bd2a271f": {
+        "rules": "firestore.rules"
+      }
+    }
+  }
+}
