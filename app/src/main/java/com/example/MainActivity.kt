@@ -348,99 +348,64 @@ fun KikiWorldApp(
             TopAppBar(
                 title = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        if (activeApp == com.example.viewmodel.ActiveAppExperience.ONE_DIRECTION_WORLD) {
-                            Box(
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .clip(RoundedCornerShape(8.dp))
-                                    .background(OneDirectionRed)
-                                    .border(1.dp, Color.White, RoundedCornerShape(8.dp)),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    text = "1D",
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Black,
-                                    fontSize = 14.sp
+                        Box(
+                            modifier = Modifier
+                                .size(34.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(
+                                    androidx.compose.ui.graphics.Brush.linearGradient(
+                                        listOf(OneDirectionRed, KikiLilac, KikiCyan)
+                                    )
                                 )
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text(
-                                        text = "ONE DIRECTION",
-                                        style = MaterialTheme.typography.titleMedium.copy(
-                                            fontWeight = FontWeight.Black,
-                                            letterSpacing = 1.2.sp
-                                        ),
-                                        color = Color.White
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = "WORLD",
-                                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                        color = OneDirectionRed
-                                    )
-                                }
+                                .border(1.dp, Color.White, RoundedCornerShape(10.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "1D×K",
+                                color = Color.White,
+                                fontWeight = FontWeight.Black,
+                                fontSize = 10.sp
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Column {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
-                                    text = "DIRECTIONERS CLUB",
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        fontWeight = FontWeight.Bold,
+                                    text = "1D WORLD",
+                                    style = MaterialTheme.typography.titleSmall.copy(
+                                        fontWeight = FontWeight.Black,
                                         letterSpacing = 0.8.sp
                                     ),
-                                    color = KikiGold,
-                                    fontSize = 9.sp
+                                    color = Color.White
                                 )
-                            }
-                        } else {
-                            Box(
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .clip(CircleShape)
-                                    .background(HolographicGradient)
-                                    .border(1.dp, Color.White, CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
                                 Text(
-                                    text = "K",
-                                    color = Color.Black,
-                                    fontWeight = FontWeight.Black,
-                                    fontSize = 16.sp
+                                    text = " × ",
+                                    style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Black),
+                                    color = KikiGold
                                 )
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text(
-                                        text = "KIKI'S WORLD",
-                                        style = MaterialTheme.typography.titleMedium.copy(
-                                            fontWeight = FontWeight.Black,
-                                            letterSpacing = 1.2.sp
-                                        ),
-                                        color = KikiPearl
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = "2.0",
-                                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                        color = KikiLilac
-                                    )
-                                }
                                 Text(
-                                    text = "CLEAN BEAUTY LAB",
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        fontWeight = FontWeight.Bold,
+                                    text = "KIKI WORLD",
+                                    style = MaterialTheme.typography.titleSmall.copy(
+                                        fontWeight = FontWeight.Black,
                                         letterSpacing = 0.8.sp
                                     ),
-                                    color = KikiCyan,
-                                    fontSize = 9.sp
+                                    color = KikiCyan
                                 )
                             }
+                            Text(
+                                text = "MERGED EDITION • AUTO-SYNC & AUTO-UPDATE ACTIVE ✓",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    letterSpacing = 0.4.sp
+                                ),
+                                color = KikiGold,
+                                fontSize = 8.5.sp
+                            )
                         }
                     }
                 },
                 actions = {
-                    // Dual App Switcher Pill Button
+                    // Unified Merged Universe Theme & Focus Pill
                     Surface(
                         shape = RoundedCornerShape(100.dp),
                         color = KikiSurfaceElevated,
@@ -458,17 +423,10 @@ fun KikiWorldApp(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = if (activeApp == com.example.viewmodel.ActiveAppExperience.ONE_DIRECTION_WORLD) "❤️ 1D" else "💄 KIKI",
-                                fontSize = 11.sp,
+                                text = "❤️ 1D + 💄 KIKI",
+                                fontSize = 10.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = if (activeApp == com.example.viewmodel.ActiveAppExperience.ONE_DIRECTION_WORLD) Color.White else KikiPearl
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = "⇄ Switch",
-                                fontSize = 9.sp,
-                                color = KikiGold,
-                                fontWeight = FontWeight.SemiBold
+                                color = Color.White
                             )
                         }
                     }
@@ -514,14 +472,12 @@ fun KikiWorldApp(
                     tonalElevation = 8.dp,
                     modifier = Modifier.border(0.5.dp, KikiSurfaceBorder)
                 ) {
-                if (activeApp == com.example.viewmodel.ActiveAppExperience.ONE_DIRECTION_WORLD) {
+                    // Merged 1D World + Kiki World Unified 5-Tab Bottom Bar
                     NavigationBarItem(
                         selected = currentTab == KikiNavTab.ONE_DIRECTION_DOORWAYS,
                         onClick = { viewModel.selectTab(KikiNavTab.ONE_DIRECTION_DOORWAYS) },
-                        icon = {
-                            Text("🚪", fontSize = 18.sp)
-                        },
-                        label = { Text("Doorways", fontWeight = FontWeight.Bold) },
+                        icon = { Text("🚪", fontSize = 18.sp) },
+                        label = { Text("Doorways", fontWeight = FontWeight.Bold, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = Color.White,
                             selectedTextColor = Color.White,
@@ -535,10 +491,8 @@ fun KikiWorldApp(
                     NavigationBarItem(
                         selected = currentTab == KikiNavTab.ONE_DIRECTION,
                         onClick = { viewModel.selectTab(KikiNavTab.ONE_DIRECTION) },
-                        icon = {
-                            Text("❤️", fontSize = 18.sp)
-                        },
-                        label = { Text("1D Hub", fontWeight = FontWeight.Bold) },
+                        icon = { Text("❤️", fontSize = 18.sp) },
+                        label = { Text("1D Hub", fontWeight = FontWeight.Bold, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = OneDirectionRed,
                             selectedTextColor = Color.White,
@@ -550,33 +504,15 @@ fun KikiWorldApp(
                     )
 
                     NavigationBarItem(
-                        selected = currentTab == KikiNavTab.MULTI_STORE,
-                        onClick = { viewModel.selectTab(KikiNavTab.MULTI_STORE) },
-                        icon = {
-                            Text("🪟", fontSize = 18.sp)
-                        },
-                        label = { Text("PC & Stores", fontWeight = FontWeight.SemiBold) },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.Black,
-                            selectedTextColor = KikiPearl,
-                            indicatorColor = Color(0xFF0078D4),
-                            unselectedIconColor = KikiTextMuted,
-                            unselectedTextColor = KikiTextMuted
-                        ),
-                        modifier = Modifier.testTag("nav_pc_stores")
-                    )
-                } else {
-                    // Kiki's World Tabs
-                    NavigationBarItem(
                         selected = currentTab == KikiNavTab.DASHBOARD || currentTab == KikiNavTab.HOME,
                         onClick = { viewModel.selectTab(KikiNavTab.DASHBOARD) },
                         icon = {
                             Icon(
                                 imageVector = if (currentTab == KikiNavTab.DASHBOARD) Icons.Filled.Home else Icons.Outlined.Home,
-                                contentDescription = "Home"
+                                contentDescription = "Kiki Home"
                             )
                         },
-                        label = { Text("Home", fontWeight = FontWeight.SemiBold) },
+                        label = { Text("Kiki Home", fontWeight = FontWeight.SemiBold, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = Color.Black,
                             selectedTextColor = KikiPearl,
@@ -596,7 +532,7 @@ fun KikiWorldApp(
                                 contentDescription = "Studio Lab"
                             )
                         },
-                        label = { Text("Studio Lab", fontWeight = FontWeight.SemiBold) },
+                        label = { Text("Studio Lab", fontWeight = FontWeight.SemiBold, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = Color.Black,
                             selectedTextColor = KikiPearl,
@@ -608,62 +544,25 @@ fun KikiWorldApp(
                     )
 
                     NavigationBarItem(
-                        selected = currentTab == KikiNavTab.DROPS,
-                        onClick = { viewModel.selectTab(KikiNavTab.DROPS) },
-                        icon = {
-                            Icon(
-                                imageVector = if (currentTab == KikiNavTab.DROPS) Icons.Filled.HowToVote else Icons.Outlined.HowToVote,
-                                contentDescription = "Drops Voting"
-                            )
-                        },
-                        label = { Text("Drops", fontWeight = FontWeight.SemiBold) },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.Black,
-                            selectedTextColor = KikiPearl,
-                            indicatorColor = KikiLilac,
-                            unselectedIconColor = KikiTextMuted,
-                            unselectedTextColor = KikiTextMuted
-                        ),
-                        modifier = Modifier.testTag("nav_drops")
-                    )
-
-                    NavigationBarItem(
-                        selected = currentTab == KikiNavTab.VAULT,
+                        selected = currentTab == KikiNavTab.VAULT || currentTab == KikiNavTab.DRIVE || currentTab == KikiNavTab.MULTI_STORE,
                         onClick = { viewModel.selectTab(KikiNavTab.VAULT) },
                         icon = {
                             Icon(
                                 imageVector = if (currentTab == KikiNavTab.VAULT) Icons.Filled.Stars else Icons.Outlined.Stars,
-                                contentDescription = "Creator Vault"
+                                contentDescription = "Vault & Stores"
                             )
                         },
-                        label = { Text("Vault", fontWeight = FontWeight.SemiBold) },
+                        label = { Text("Vault", fontWeight = FontWeight.SemiBold, fontSize = 10.sp) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = Color.Black,
                             selectedTextColor = KikiPearl,
-                            indicatorColor = KikiLilac,
+                            indicatorColor = KikiCyan,
                             unselectedIconColor = KikiTextMuted,
                             unselectedTextColor = KikiTextMuted
                         ),
                         modifier = Modifier.testTag("nav_vault")
                     )
-
-                    NavigationBarItem(
-                        selected = currentTab == KikiNavTab.MULTI_STORE,
-                        onClick = { viewModel.selectTab(KikiNavTab.MULTI_STORE) },
-                        icon = {
-                            Text("🪟", fontSize = 18.sp)
-                        },
-                        label = { Text("PC & Stores", fontWeight = FontWeight.SemiBold) },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.Black,
-                            selectedTextColor = KikiPearl,
-                            indicatorColor = Color(0xFF0078D4),
-                            unselectedIconColor = KikiTextMuted,
-                            unselectedTextColor = KikiTextMuted
-                        ),
-                    )
                 }
-            }
             }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
@@ -700,6 +599,49 @@ fun KikiWorldApp(
             }
 
             Column(modifier = Modifier.fillMaxSize()) {
+                // Unified Merged 1D World × Kiki World Quick-Navigation Ribbon
+                androidx.compose.foundation.lazy.LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(KikiSurfaceDark.copy(alpha = 0.92f))
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val mergedQuickTabs = listOf(
+                        Triple(KikiNavTab.ONE_DIRECTION_DOORWAYS, "🚪 1D Doorways", OneDirectionRed),
+                        Triple(KikiNavTab.ONE_DIRECTION, "❤️ 1D Hub & Music", OneDirectionRed),
+                        Triple(KikiNavTab.DASHBOARD, "🏠 Kiki World Home", KikiLilac),
+                        Triple(KikiNavTab.LAB, "🧪 Clean Beauty Lab", KikiCyan),
+                        Triple(KikiNavTab.DROPS, "🗳️ Drops", KikiGold),
+                        Triple(KikiNavTab.DRIVE, "☁️ Google Drive & Flow", Color(0xFF4285F4)),
+                        Triple(KikiNavTab.VAULT, "✨ Creator Vault", KikiLilac),
+                        Triple(KikiNavTab.WATCH_STUDIO, "⌚ Smartwatch Studio", Color(0xFF00E676)),
+                        Triple(KikiNavTab.MULTI_STORE, "🪟 PC & App Stores", Color(0xFF0078D4))
+                    )
+                    items(mergedQuickTabs.size) { index ->
+                        val (tabItem, label, accentColor) = mergedQuickTabs[index]
+                        val isSelected = currentTab == tabItem
+                        Surface(
+                            shape = RoundedCornerShape(100.dp),
+                            color = if (isSelected) accentColor.copy(alpha = 0.28f) else KikiSurfaceElevated,
+                            border = androidx.compose.foundation.BorderStroke(
+                                1.dp,
+                                if (isSelected) accentColor else KikiSurfaceBorder
+                            ),
+                            modifier = Modifier.clickable { viewModel.selectTab(tabItem) }
+                        ) {
+                            Text(
+                                text = label,
+                                fontSize = 10.5.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                color = if (isSelected) Color.White else KikiPearl,
+                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                            )
+                        }
+                    }
+                }
+
                 Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
                     NavHost(
                         navController = navController,
@@ -1046,141 +988,95 @@ fun Windows11DesktopNavigationRail(
             }
         }
     ) {
-        if (activeApp == com.example.viewmodel.ActiveAppExperience.ONE_DIRECTION_WORLD) {
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.ONE_DIRECTION_DOORWAYS,
-                onClick = { onSelectTab(KikiNavTab.ONE_DIRECTION_DOORWAYS) },
-                icon = { Text("🚪", fontSize = 20.sp) },
-                label = { Text("Doorways", fontSize = 10.sp, fontWeight = FontWeight.Bold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.White,
-                    selectedTextColor = Color.White,
-                    indicatorColor = Color(0xFFFFD1DC).copy(alpha = 0.45f),
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_1d_doorways")
-            )
+        // Unified Merged 1D World × Kiki World Desktop Rail
+        NavigationRailItem(
+            selected = currentTab == KikiNavTab.ONE_DIRECTION_DOORWAYS,
+            onClick = { onSelectTab(KikiNavTab.ONE_DIRECTION_DOORWAYS) },
+            icon = { Text("🚪", fontSize = 20.sp) },
+            label = { Text("Doorways", fontSize = 10.sp, fontWeight = FontWeight.Bold) },
+            colors = NavigationRailItemDefaults.colors(
+                selectedIconColor = Color.White,
+                selectedTextColor = Color.White,
+                indicatorColor = Color(0xFFFFD1DC).copy(alpha = 0.45f),
+                unselectedIconColor = KikiTextMuted,
+                unselectedTextColor = KikiTextMuted
+            ),
+            modifier = Modifier.testTag("rail_1d_doorways")
+        )
 
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.ONE_DIRECTION,
-                onClick = { onSelectTab(KikiNavTab.ONE_DIRECTION) },
-                icon = { Text("❤️", fontSize = 20.sp) },
-                label = { Text("1D Hub", fontSize = 10.sp, fontWeight = FontWeight.Bold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = OneDirectionRed,
-                    selectedTextColor = Color.White,
-                    indicatorColor = OneDirectionRed.copy(alpha = 0.35f),
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_one_direction")
-            )
+        NavigationRailItem(
+            selected = currentTab == KikiNavTab.ONE_DIRECTION,
+            onClick = { onSelectTab(KikiNavTab.ONE_DIRECTION) },
+            icon = { Text("❤️", fontSize = 20.sp) },
+            label = { Text("1D Hub", fontSize = 10.sp, fontWeight = FontWeight.Bold) },
+            colors = NavigationRailItemDefaults.colors(
+                selectedIconColor = OneDirectionRed,
+                selectedTextColor = Color.White,
+                indicatorColor = OneDirectionRed.copy(alpha = 0.35f),
+                unselectedIconColor = KikiTextMuted,
+                unselectedTextColor = KikiTextMuted
+            ),
+            modifier = Modifier.testTag("rail_one_direction")
+        )
 
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.MULTI_STORE,
-                onClick = { onSelectTab(KikiNavTab.MULTI_STORE) },
-                icon = { Text("🪟", fontSize = 20.sp) },
-                label = { Text("PC Stores", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.Black,
-                    selectedTextColor = KikiPearl,
-                    indicatorColor = Color(0xFF0078D4),
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_pc_stores")
-            )
+        NavigationRailItem(
+            selected = currentTab == KikiNavTab.DASHBOARD || currentTab == KikiNavTab.HOME,
+            onClick = { onSelectTab(KikiNavTab.DASHBOARD) },
+            icon = { Icon(Icons.Filled.Home, contentDescription = "Kiki Home") },
+            label = { Text("Kiki Home", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
+            colors = NavigationRailItemDefaults.colors(
+                selectedIconColor = Color.Black,
+                selectedTextColor = KikiPearl,
+                indicatorColor = KikiLilac,
+                unselectedIconColor = KikiTextMuted,
+                unselectedTextColor = KikiTextMuted
+            ),
+            modifier = Modifier.testTag("rail_kiki_home")
+        )
 
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.WATCH_STUDIO,
-                onClick = { onOpenWatchStudio() },
-                icon = { Text("⌚", fontSize = 20.sp) },
-                label = { Text("Wear OS", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.Black,
-                    selectedTextColor = KikiPearl,
-                    indicatorColor = Color(0xFF00E676),
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_watch_studio")
-            )
-        } else {
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.DASHBOARD || currentTab == KikiNavTab.HOME,
-                onClick = { onSelectTab(KikiNavTab.DASHBOARD) },
-                icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-                label = { Text("Home", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.Black,
-                    selectedTextColor = KikiPearl,
-                    indicatorColor = KikiLilac,
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_kiki_home")
-            )
+        NavigationRailItem(
+            selected = currentTab == KikiNavTab.LAB,
+            onClick = { onSelectTab(KikiNavTab.LAB) },
+            icon = { Icon(Icons.Filled.Science, contentDescription = "Lab") },
+            label = { Text("Studio Lab", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
+            colors = NavigationRailItemDefaults.colors(
+                selectedIconColor = Color.Black,
+                selectedTextColor = KikiPearl,
+                indicatorColor = KikiLilac,
+                unselectedIconColor = KikiTextMuted,
+                unselectedTextColor = KikiTextMuted
+            ),
+            modifier = Modifier.testTag("rail_lab")
+        )
 
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.LAB,
-                onClick = { onSelectTab(KikiNavTab.LAB) },
-                icon = { Icon(Icons.Filled.Science, contentDescription = "Lab") },
-                label = { Text("Studio Lab", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.Black,
-                    selectedTextColor = KikiPearl,
-                    indicatorColor = KikiLilac,
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_lab")
-            )
+        NavigationRailItem(
+            selected = currentTab == KikiNavTab.VAULT || currentTab == KikiNavTab.DRIVE,
+            onClick = { onSelectTab(KikiNavTab.VAULT) },
+            icon = { Icon(Icons.Filled.Stars, contentDescription = "Vault") },
+            label = { Text("Vault", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
+            colors = NavigationRailItemDefaults.colors(
+                selectedIconColor = Color.Black,
+                selectedTextColor = KikiPearl,
+                indicatorColor = KikiLilac,
+                unselectedIconColor = KikiTextMuted,
+                unselectedTextColor = KikiTextMuted
+            ),
+            modifier = Modifier.testTag("rail_vault")
+        )
 
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.DROPS,
-                onClick = { onSelectTab(KikiNavTab.DROPS) },
-                icon = { Icon(Icons.Filled.HowToVote, contentDescription = "Drops") },
-                label = { Text("Drops", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.Black,
-                    selectedTextColor = KikiPearl,
-                    indicatorColor = KikiLilac,
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_drops")
-            )
-
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.VAULT,
-                onClick = { onSelectTab(KikiNavTab.VAULT) },
-                icon = { Icon(Icons.Filled.Stars, contentDescription = "Vault") },
-                label = { Text("Vault", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.Black,
-                    selectedTextColor = KikiPearl,
-                    indicatorColor = KikiLilac,
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_vault")
-            )
-
-            NavigationRailItem(
-                selected = currentTab == KikiNavTab.MULTI_STORE,
-                onClick = { onSelectTab(KikiNavTab.MULTI_STORE) },
-                icon = { Text("🪟", fontSize = 20.sp) },
-                label = { Text("Stores", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
-                colors = NavigationRailItemDefaults.colors(
-                    selectedIconColor = Color.Black,
-                    selectedTextColor = KikiPearl,
-                    indicatorColor = Color(0xFF0078D4),
-                    unselectedIconColor = KikiTextMuted,
-                    unselectedTextColor = KikiTextMuted
-                ),
-                modifier = Modifier.testTag("rail_multi_store")
-            )
-        }
+        NavigationRailItem(
+            selected = currentTab == KikiNavTab.MULTI_STORE,
+            onClick = { onSelectTab(KikiNavTab.MULTI_STORE) },
+            icon = { Text("🪟", fontSize = 20.sp) },
+            label = { Text("PC Stores", fontSize = 10.sp, fontWeight = FontWeight.SemiBold) },
+            colors = NavigationRailItemDefaults.colors(
+                selectedIconColor = Color.Black,
+                selectedTextColor = KikiPearl,
+                indicatorColor = Color(0xFF0078D4),
+                unselectedIconColor = KikiTextMuted,
+                unselectedTextColor = KikiTextMuted
+            ),
+            modifier = Modifier.testTag("rail_pc_stores")
+        )
     }
 }
